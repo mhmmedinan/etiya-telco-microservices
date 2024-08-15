@@ -5,12 +5,16 @@ import com.customerservice.kafka.producers.customers.CreateIndividualCustomerPro
 import com.customerservice.repositories.IndividualCustomerRepository;
 import com.customerservice.services.abstracts.IndividualCustomerService;
 import com.customerservice.services.dtos.requests.individualCustomers.CreateIndividualCustomerRequest;
+import com.customerservice.services.dtos.requests.individualCustomers.DeleteIndividualCustomerRequest;
 import com.customerservice.services.dtos.responses.individualCustomers.CreateIndividualCustomerResponse;
+import com.customerservice.services.dtos.responses.individualCustomers.DeleteIndividualCustomerResponse;
 import com.customerservice.services.dtos.responses.individualCustomers.GetListIndividualCustomerResponse;
 import com.customerservice.services.mappers.IndividualCustomerMapper;
 import com.etiya.common.events.customers.CreatedIndividualCustomerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +43,15 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         individualCustomerProducer.sendMessage(event);
         return response;
 
+    }
+
+    @Override
+    public DeleteIndividualCustomerResponse delete(DeleteIndividualCustomerRequest deleteIndividualCustomerRequest) {
+        IndividualCustomer individualCustomer = individualCustomerRepository.findById(deleteIndividualCustomerRequest.getId()).get();
+        individualCustomer.setDeletedDate(LocalDateTime.now());
+        IndividualCustomer deletedIndividualCustomer = individualCustomerRepository.save(individualCustomer);
+        DeleteIndividualCustomerResponse response = IndividualCustomerMapper.INSTANCE.deleteIndividualCustomerResponseFromIndividualCustomer(deletedIndividualCustomer);
+        return response;
     }
 
     @Override

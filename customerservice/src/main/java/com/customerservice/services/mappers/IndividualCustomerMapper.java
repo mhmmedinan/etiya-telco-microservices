@@ -7,6 +7,7 @@ import com.customerservice.services.dtos.requests.individualCustomers.CreateIndi
 import com.customerservice.services.dtos.responses.addresses.CreateAddressResponse;
 import com.customerservice.services.dtos.responses.addresses.GetListAddressResponse;
 import com.customerservice.services.dtos.responses.individualCustomers.CreateIndividualCustomerResponse;
+import com.customerservice.services.dtos.responses.individualCustomers.DeleteIndividualCustomerResponse;
 import com.customerservice.services.dtos.responses.individualCustomers.GetListIndividualCustomerResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -22,4 +23,5 @@ public interface IndividualCustomerMapper {
     IndividualCustomer individualCustomerFromCreateIndividualCustomerRequest(CreateIndividualCustomerRequest createIndividualCustomerRequest);
     CreateIndividualCustomerResponse createIndividualCustomerResponseFromIndividualCustomer(IndividualCustomer individualCustomer);
     GetListIndividualCustomerResponse getListIndividualCustomerResponsesFromIndividualCustomer(IndividualCustomer individualCustomer);
+    DeleteIndividualCustomerResponse deleteIndividualCustomerResponseFromIndividualCustomer(IndividualCustomer individualCustomer);
 }

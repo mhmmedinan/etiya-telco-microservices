@@ -19,7 +19,7 @@ public class CreateIndividualCustomerConsumer {
     @KafkaListener(topics = "customer-created",groupId ="created-customer")
     private void consume(CreatedIndividualCustomerEvent event){
         Customer customer = new Customer();
-        customer.setId(event.getId());
+        customer.setId(event.getId().toString());
         customer.setFirstName(event.getFirstName());
         customer.setLastName(event.getLastName());
         customer.setNationalityId(event.getNationalityId());

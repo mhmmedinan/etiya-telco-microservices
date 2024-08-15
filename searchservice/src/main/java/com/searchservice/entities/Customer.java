@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    private UUID id;
+    private String id;
 
     @Field(name = "firstName")
     private String firstName;
