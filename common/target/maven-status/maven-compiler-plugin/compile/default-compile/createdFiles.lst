@@ -1,0 +1,2 @@
+com\etiya\common\CommonApplication.class
+com\etiya\common\events\customers\CreatedIndividualCustomerEvent.class
