@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -31,4 +32,7 @@ public class Customer {
 
     @Field(name = "gender")
     private String gender;
+
+    @Field(name = "deleted_date")
+    private LocalDateTime deletedDate;
 }

@@ -2,6 +2,7 @@ package com.customerservice.services.concretes;
 
 import com.customerservice.entities.concretes.IndividualCustomer;
 import com.customerservice.kafka.producers.customers.CreateIndividualCustomerProducer;
+import com.customerservice.kafka.producers.customers.DeleteIndividualCustomerProducer;
 import com.customerservice.repositories.IndividualCustomerRepository;
 import com.customerservice.services.abstracts.IndividualCustomerService;
 import com.customerservice.services.dtos.requests.individualCustomers.CreateIndividualCustomerRequest;
@@ -11,6 +12,7 @@ import com.customerservice.services.dtos.responses.individualCustomers.DeleteInd
 import com.customerservice.services.dtos.responses.individualCustomers.GetListIndividualCustomerResponse;
 import com.customerservice.services.mappers.IndividualCustomerMapper;
 import com.etiya.common.events.customers.CreatedIndividualCustomerEvent;
+import com.etiya.common.events.customers.DeletedIndividualCustomerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
 
     private final IndividualCustomerRepository individualCustomerRepository;
     private final CreateIndividualCustomerProducer individualCustomerProducer;
+    private final DeleteIndividualCustomerProducer deleteIndividualCustomerProducer;
 
     @Override
     public CreateIndividualCustomerResponse add(CreateIndividualCustomerRequest createIndividualCustomerRequest) {
@@ -50,7 +53,13 @@ public class IndividualCustomerServiceImpl implements IndividualCustomerService 
         IndividualCustomer individualCustomer = individualCustomerRepository.findById(deleteIndividualCustomerRequest.getId()).get();
         individualCustomer.setDeletedDate(LocalDateTime.now());
         IndividualCustomer deletedIndividualCustomer = individualCustomerRepository.save(individualCustomer);
-        DeleteIndividualCustomerResponse response = IndividualCustomerMapper.INSTANCE.deleteIndividualCustomerResponseFromIndividualCustomer(deletedIndividualCustomer);
+        DeleteIndividualCustomerResponse response =
+                IndividualCustomerMapper.INSTANCE.deleteIndividualCustomerResponseFromIndividualCustomer(deletedIndividualCustomer);
+
+        DeletedIndividualCustomerEvent event = new DeletedIndividualCustomerEvent();
+        event.setId(deletedIndividualCustomer.getId());
+        event.setDeletedDate(deletedIndividualCustomer.getDeletedDate());
+        deleteIndividualCustomerProducer.sendMessage(event);
         return response;
     }
 
