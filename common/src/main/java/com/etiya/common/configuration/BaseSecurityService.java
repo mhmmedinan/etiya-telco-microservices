@@ -1,7 +1,6 @@
 package com.etiya.common.configuration;
 
 import com.etiya.common.filters.JwtAuthFilter;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
