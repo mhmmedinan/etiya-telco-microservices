@@ -25,8 +25,8 @@ public class BaseSecurityService {
     public HttpSecurity configureCoreSecurity(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req->req.requestMatchers(WHITE_LIST_URLS).permitAll())
-                .addFilterBefore((Filter) jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(req->req.requestMatchers("WHITE_LIST_URLS").permitAll())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity;
 
     }

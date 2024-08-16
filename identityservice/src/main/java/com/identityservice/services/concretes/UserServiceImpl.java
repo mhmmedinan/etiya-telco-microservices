@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(registerRequest.getFirstName());
         user.setLastName(registerRequest.getLastName());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
