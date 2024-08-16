@@ -3,11 +3,12 @@ package com.basketservice.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class BasketItem {
+public class BasketItem implements Serializable {
     private String id;
     private String productId;
     private String productName;
