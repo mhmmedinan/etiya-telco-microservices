@@ -7,6 +7,7 @@ import com.customerservice.services.dtos.responses.individualCustomers.CreateInd
 import com.customerservice.services.dtos.responses.individualCustomers.DeleteIndividualCustomerResponse;
 import com.customerservice.services.dtos.responses.individualCustomers.GetListIndividualCustomerResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class IndividualCustomersController {
     }
 
     @GetMapping
+    @Secured(value = {"customer.getlist"})
     public List<GetListIndividualCustomerResponse> getList()
     {
         return individualCustomerService.getList();
