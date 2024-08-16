@@ -19,7 +19,7 @@ public class JwtService {
     private String SECRET_KEY;
 
     @Value("${jwt.expiration.ms}")
-    private String EXPIRATION;
+    private long EXPIRATION;
 
     public String generateToken(String userName, List<String> roles) {
         Map<String, Object> claims = new HashMap<>();
